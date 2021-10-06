@@ -37,7 +37,7 @@ func shouldFail(t *testing.T, action func() (interface{}, error)) error {
 	return err
 }
 
-func getAPI(endpoint string) *Client {
+func getAPI(endpoint string) *Account {
 	api, _ := New(Opts{testAccountID, "YXBpVG9rZW46YXBpU2VjcmV0", endpoint, nil, true})
 	return api
 }
@@ -51,44 +51,44 @@ type RequestHandler struct {
 	PathAndQuery string
 	Method       string
 
-	EstimatedContent string
-	EstimatedHeaders map[string]string
+	EstimatedRequestContent string
+	EstimatedRequestHeaders map[string]string
 
-	HeadersToSend    map[string]string
-	ContentToSend    string
-	StatusCodeToSend int
+	ResponseHeaders    map[string]string
+	ResponseContent    string
+	ResponseStatusCode int
 }
 
-func startMockServer(t *testing.T, handlers []RequestHandler) (*httptest.Server, *Client) {
+func startMockServer(t *testing.T, handlers []RequestHandler) (*httptest.Server, *Account) {
 	mockServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, handler := range handlers {
 			if handler.Method == "" {
 				handler.Method = http.MethodGet
 			}
-			if handler.StatusCodeToSend == 0 {
-				handler.StatusCodeToSend = http.StatusOK
+			if handler.ResponseStatusCode == 0 {
+				handler.ResponseStatusCode = http.StatusOK
 			}
 			if handler.Method == r.Method && handler.PathAndQuery == r.URL.String() {
-				if handler.EstimatedContent != "" {
-					expect(t, readText(t, r.Body), handler.EstimatedContent)
+				if handler.EstimatedRequestContent != "" {
+					expect(t, readText(t, r.Body), handler.EstimatedRequestContent)
 				}
-				if handler.EstimatedHeaders != nil {
-					for key, value := range handler.EstimatedHeaders {
+				if handler.EstimatedRequestHeaders != nil {
+					for key, value := range handler.EstimatedRequestHeaders {
 						expect(t, r.Header.Get(key), value)
 					}
 				}
 				header := w.Header()
-				if handler.HeadersToSend != nil {
-					for key, value := range handler.HeadersToSend {
+				if handler.ResponseHeaders != nil {
+					for key, value := range handler.ResponseHeaders {
 						header.Set(key, value)
 					}
 				}
-				if handler.ContentToSend != "" && header.Get("Content-Type") == "" {
+				if handler.ResponseContent != "" && header.Get("Content-Type") == "" {
 					header.Set("Content-Type", "application/json")
 				}
-				w.WriteHeader(handler.StatusCodeToSend)
-				if handler.ContentToSend != "" {
-					fmt.Fprintln(w, handler.ContentToSend)
+				w.WriteHeader(handler.ResponseStatusCode)
+				if handler.ResponseContent != "" {
+					fmt.Fprintln(w, handler.ResponseContent)
 				}
 				return
 			}
