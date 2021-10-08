@@ -7,7 +7,7 @@ import (
 )
 
 // CreateMessagingProfile creates the Messaging Profile and returns its ID.
-func (a *Account) CreateMessagingProfile(ctx context.Context, params MessagingProfileParameters) (string, error) {
+func (a *Account) CreateMessagingProfile(ctx context.Context, params *MessagingProfileParameters) (string, error) {
 	path := a.DefaultEndpoint + accountsPath
 	data := params
 	result, _, err := a.makeRequest(ctx, http.MethodPost, path, &MessagingProfileResponse{}, data)
@@ -23,7 +23,7 @@ func (a *Account) CreateMessagingProfile(ctx context.Context, params MessagingPr
 }
 
 // SendMessage allows you to send a message with any messaging resource. Current messaging resources include: long-code, short-code, number-pool, and alphanumeric-sender-id.
-func (a *Account) SendMessage(ctx context.Context, params SendMessageParameters) (*SendMessageResponse, error) {
+func (a *Account) SendMessage(ctx context.Context, params *SendMessageParameters) (*SendMessageResponse, error) {
 	path := a.DefaultEndpoint + messagingPath
 	if params.From == "" && params.MessagingProfileID == "" {
 		return nil, fmt.Errorf("error: from number or number pool not found")

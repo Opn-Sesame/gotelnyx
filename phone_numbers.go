@@ -7,7 +7,7 @@ import (
 )
 
 // NumberSearch returns a response of available phone numbers.
-func (a *Account) NumberSearch(ctx context.Context, searchOpts NumberSearchOptions) (*NumberSearchResponse, error) {
+func (a *Account) NumberSearch(ctx context.Context, searchOpts *NumberSearchOptions) (*NumberSearchResponse, error) {
 	path := a.DefaultEndpoint + numberSearchPath
 	areaCodeFilter := ""
 	if searchOpts.AreaCode != "" {
@@ -26,9 +26,9 @@ func (a *Account) NumberSearch(ctx context.Context, searchOpts NumberSearchOptio
 }
 
 // CreateNumberOrder creates a phone number order.
-func (a *Account) CreateNumberOrder(ctx context.Context, NumberOrderParams NumberOrderParameters) (*NumberOrderResponse, error) {
+func (a *Account) CreateNumberOrder(ctx context.Context, numberOrderParams *NumberOrderParameters) (*NumberOrderResponse, error) {
 	path := a.DefaultEndpoint + numberOrderPath
-	result, _, err := a.makeRequest(ctx, http.MethodPost, path, &NumberOrderResponse{}, &NumberOrderParams)
+	result, _, err := a.makeRequest(ctx, http.MethodPost, path, &NumberOrderResponse{}, &numberOrderParams)
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func (a *Account) CreateNumberOrder(ctx context.Context, NumberOrderParams Numbe
 }
 
 // RetreiveNumberOrder creates a phone number order.
-func (a *Account) RetreiveNumberOrder(ctx context.Context, retreiveNumberOrderParams RetreiveNumberOrderParameters) (*NumberOrderResponse, error) {
+func (a *Account) RetreiveNumberOrder(ctx context.Context, retreiveNumberOrderParams *RetreiveNumberOrderParameters) (*NumberOrderResponse, error) {
 	path := fmt.Sprintf("%s%s/%s", a.DefaultEndpoint, numberOrderPath, retreiveNumberOrderParams.ID)
 	result, _, err := a.makeRequest(ctx, http.MethodGet, path, &NumberOrderResponse{}, nil)
 	if err != nil {

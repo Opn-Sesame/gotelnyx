@@ -19,7 +19,7 @@ func TestCreateMessagingProfile(t *testing.T) {
 	defer server.Close()
 	numberPoolOpts := NumberPoolSettings{false, 0, true, true, 0}
 	data := MessagingProfileParameters{"Test123", true, numberPoolOpts, "https://app.opnsesame.com/"}
-	result, err := api.CreateMessagingProfile(context.Background(), data)
+	result, err := api.CreateMessagingProfile(context.Background(), &data)
 	if err != nil {
 		t.Errorf("Failed call of CreateMessagingProfile(): %v", err)
 		return
@@ -39,7 +39,7 @@ func TestSendMessage(t *testing.T) {
 		EstimatedRequestContent: ExpectedSendMessagePayload,
 		ResponseContent:         FakeSendMessageResponse}})
 	defer server.Close()
-	result, err := api.SendMessage(context.Background(), sendMessageParameters)
+	result, err := api.SendMessage(context.Background(), &sendMessageParameters)
 	if err != nil {
 		t.Errorf("Failed call of SendMessage(): %v", err)
 		return

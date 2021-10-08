@@ -18,7 +18,7 @@ func TestNumberSearch(t *testing.T) {
 		AreaCode:    "970",
 		SearchLimit: 1,
 	}
-	result, err := api.NumberSearch(context.Background(), queryParams)
+	result, err := api.NumberSearch(context.Background(), &queryParams)
 	if err != nil {
 		t.Errorf("Failed call of NumberSearch(): %v", err)
 		return
@@ -37,7 +37,7 @@ func TestNumberSearchFail(t *testing.T) {
 		AreaCode:    "970",
 		SearchLimit: 1,
 	}
-	shouldFail(t, func() (interface{}, error) { return api.NumberSearch(context.Background(), queryParams) })
+	shouldFail(t, func() (interface{}, error) { return api.NumberSearch(context.Background(), &queryParams) })
 }
 
 func TestCreateNumberOrder(t *testing.T) {
@@ -45,7 +45,7 @@ func TestCreateNumberOrder(t *testing.T) {
 	phoneNumbers := []NumberOrderPhoneNumbers{
 		{PhoneNumber: "+19705555098"},
 	}
-	NumberOrderParams := NumberOrderParameters{
+	numberOrderParams := NumberOrderParameters{
 		PhoneNumbers: &phoneNumbers,
 	}
 	server, api := startMockServer(t, []RequestHandler{{
@@ -54,7 +54,7 @@ func TestCreateNumberOrder(t *testing.T) {
 		EstimatedRequestContent: ExpectedCreateNumberOrderPayload,
 		ResponseContent:         FakeNumberOrderResponse}})
 	defer server.Close()
-	result, err := api.CreateNumberOrder(context.Background(), NumberOrderParams)
+	result, err := api.CreateNumberOrder(context.Background(), &numberOrderParams)
 	if err != nil {
 		t.Errorf("Failed call of NumberOrder(): %v", err)
 		return
@@ -72,7 +72,7 @@ func TestRetreiveNumberOrder(t *testing.T) {
 		Method:          http.MethodGet,
 		ResponseContent: FakeNumberOrderResponse}})
 	defer server.Close()
-	result, err := api.RetreiveNumberOrder(context.Background(), retreiveNumberOrderParameters)
+	result, err := api.RetreiveNumberOrder(context.Background(), &retreiveNumberOrderParameters)
 	if err != nil {
 		t.Errorf("Failed call of NumberOrder(): %v", err)
 		return
