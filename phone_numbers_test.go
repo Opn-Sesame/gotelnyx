@@ -23,8 +23,8 @@ func TestNumberSearch(t *testing.T) {
 		t.Errorf("Failed call of NumberSearch(): %v", err)
 		return
 	}
-	expect(t, len(result.Data), 1)
-	expect(t, result.Data[0].PhoneNumber, number)
+	expect(t, len(result.PhoneNumbers), 1)
+	expect(t, result.PhoneNumbers[0], number)
 }
 
 func TestNumberSearchFail(t *testing.T) {

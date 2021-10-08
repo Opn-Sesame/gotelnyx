@@ -79,7 +79,7 @@ var FakeNumberSearchResponse = `{
 	],
 	"meta": {
 	  "best_effort_results": 50,
-	  "total_results": 100
+	  "total_results": 1
 	}
   }`
 

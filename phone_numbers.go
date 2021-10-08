@@ -7,7 +7,7 @@ import (
 )
 
 // NumberSearch returns a response of available phone numbers.
-func (a *Account) NumberSearch(ctx context.Context, searchOpts *NumberSearchOptions) (*NumberSearchResponse, error) {
+func (a *Account) NumberSearch(ctx context.Context, searchOpts *NumberSearchOptions) (*NumberSearchResponseList, error) {
 	path := a.DefaultEndpoint + numberSearchPath
 	areaCodeFilter := ""
 	if searchOpts.AreaCode != "" {
@@ -22,7 +22,14 @@ func (a *Account) NumberSearch(ctx context.Context, searchOpts *NumberSearchOpti
 	if err != nil {
 		return nil, err
 	}
-	return result.(*NumberSearchResponse), nil
+	data := result.(*NumberSearchResponse).Data
+	totalResults := result.(*NumberSearchResponse).Meta.TotalResults
+	numberList := make([]string, totalResults)
+
+	for i := 0; i < totalResults; i++ {
+		numberList[i] = data[i].PhoneNumber
+	}
+	return &NumberSearchResponseList{PhoneNumbers: numberList}, nil
 }
 
 // CreateNumberOrder creates a phone number order.

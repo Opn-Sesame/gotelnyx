@@ -41,6 +41,10 @@ type NumberSearchResponse struct {
 	Meta NumberSearchResponseMeta   `json:"meta"`
 }
 
+type NumberSearchResponseList struct {
+	PhoneNumbers []string
+}
+
 // Number Order Structs
 type NumberOrderResponsePhoneNumbers struct {
 	ID                     string `json:"id"`
