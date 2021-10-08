@@ -28,7 +28,7 @@ func TestNewFail(t *testing.T) {
 func TestCreateRequest(t *testing.T) {
 	endpoint := "https://localhost"
 	api := getAPI(endpoint)
-	req, err := api.createRequest(context.Background(), http.MethodGet, endpoint+"/v2/test")
+	req, err := api.CreateRequest(context.Background(), http.MethodGet, endpoint+"/v2/test")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +43,7 @@ func TestCreateRequestFail(t *testing.T) {
 	endpoint := "https://localhost"
 	api := getAPI(endpoint)
 	shouldFail(t, func() (interface{}, error) {
-		return api.createRequest(context.Background(), "invalid\n\r\tmethod", "invalid:/\n/ url = ")
+		return api.CreateRequest(context.Background(), "invalid\n\r\tmethod", "invalid:/\n/ url = ")
 	})
 }
 

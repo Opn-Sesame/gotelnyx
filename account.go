@@ -41,7 +41,7 @@ func New(opts Opts) (*Account, error) {
 	return c, nil
 }
 
-func (a *Account) createRequest(ctx context.Context, method, path string) (*http.Request, error) {
+func (a *Account) CreateRequest(ctx context.Context, method, path string) (*http.Request, error) {
 	request, err := http.NewRequestWithContext(ctx, method, path, nil)
 	if err != nil {
 		return nil, err
@@ -100,7 +100,7 @@ func (a *Account) checkJSONResponse(response *http.Response, responseBody interf
 }
 
 func (a *Account) makeRequest(ctx context.Context, method, path string, data ...interface{}) (interface{}, http.Header, error) {
-	request, err := a.createRequest(ctx, method, path)
+	request, err := a.CreateRequest(ctx, method, path)
 	var responseBody interface{}
 	if err != nil {
 		return nil, nil, err
