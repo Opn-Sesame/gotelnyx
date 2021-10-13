@@ -4,11 +4,11 @@ import "time"
 
 // Messaging Profile Structs
 type NumberPoolSettings struct {
-	Geomatch       bool `json:"geomatch"`
-	LongCodeWeight int  `json:"long_code_weight"`
-	SkipUnhealthy  bool `json:"skip_unhealthy"`
-	StickySender   bool `json:"sticky_sender"`
-	TollFreeWeight int  `json:"toll_free_weight"`
+	Geomatch       bool    `json:"geomatch"`
+	LongCodeWeight float64 `json:"long_code_weight"`
+	SkipUnhealthy  bool    `json:"skip_unhealthy"`
+	StickySender   bool    `json:"sticky_sender"`
+	TollFreeWeight float64 `json:"toll_free_weight"`
 }
 
 type MessagingProfileParameters struct {
