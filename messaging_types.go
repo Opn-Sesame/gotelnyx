@@ -1,6 +1,9 @@
 package telnyx
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 // Messaging Profile Structs
 type NumberPoolSettings struct {
@@ -9,6 +12,13 @@ type NumberPoolSettings struct {
 	SkipUnhealthy  bool `json:"skip_unhealthy"`
 	StickySender   bool `json:"sticky_sender"`
 	TollFreeWeight int  `json:"toll_free_weight"`
+}
+type NumberPoolSettingsResponse struct {
+	Geomatch       bool        `json:"geomatch"`
+	LongCodeWeight json.Number `json:"long_code_weight"`
+	SkipUnhealthy  bool        `json:"skip_unhealthy"`
+	StickySender   bool        `json:"sticky_sender"`
+	TollFreeWeight json.Number `json:"toll_free_weight"`
 }
 
 type MessagingProfileParameters struct {
@@ -24,19 +34,19 @@ type URLShortenerSettings struct {
 	SendWebhooks         bool   `json:"send_webhooks"`
 }
 type MessagingProfileData struct {
-	CreatedAt               time.Time            `json:"created_at"`
-	Enabled                 bool                 `json:"enabled"`
-	ID                      string               `json:"id"`
-	Name                    string               `json:"name"`
-	NumberPoolSettings      NumberPoolSettings   `json:"number_pool_settings"`
-	RecordType              string               `json:"record_type"`
-	UpdatedAt               time.Time            `json:"updated_at"`
-	URLShortenerSettings    URLShortenerSettings `json:"url_shortener_settings"`
-	V1Secret                string               `json:"v1_secret"`
-	WebhookAPIVersion       string               `json:"webhook_api_version"`
-	WebhookFailoverURL      string               `json:"webhook_failover_url"`
-	WebhookURL              string               `json:"webhook_url"`
-	WhitelistedDestinations []string             `json:"whitelisted_destinations"`
+	CreatedAt               time.Time                  `json:"created_at"`
+	Enabled                 bool                       `json:"enabled"`
+	ID                      string                     `json:"id"`
+	Name                    string                     `json:"name"`
+	NumberPoolSettings      NumberPoolSettingsResponse `json:"number_pool_settings"`
+	RecordType              string                     `json:"record_type"`
+	UpdatedAt               time.Time                  `json:"updated_at"`
+	URLShortenerSettings    URLShortenerSettings       `json:"url_shortener_settings"`
+	V1Secret                string                     `json:"v1_secret"`
+	WebhookAPIVersion       string                     `json:"webhook_api_version"`
+	WebhookFailoverURL      string                     `json:"webhook_failover_url"`
+	WebhookURL              string                     `json:"webhook_url"`
+	WhitelistedDestinations []string                   `json:"whitelisted_destinations"`
 }
 type MessagingProfileResponse struct {
 	Data MessagingProfileData `json:"data"`

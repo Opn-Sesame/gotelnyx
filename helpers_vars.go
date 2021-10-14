@@ -27,7 +27,8 @@ var FakeMessagingProfileResponse = `{
 		"long_code_weight": 2,
 		"skip_unhealthy": false,
 		"sticky_sender": true,
-		"toll_free_weight": 10
+		"toll_free_weight": 10.0,
+		"tl" :399
 	  },
 	  "record_type": "messaging_profile",
 	  "updated_at": "2019-01-23T18:10:02.574Z",
