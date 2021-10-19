@@ -116,50 +116,46 @@ var FakeNumberOrderResponse = `{
 var ExpectedCreateNumberOrderPayload = `{"phone_numbers":[{"phone_number":"+19705555098"}]}`
 
 var FakeSendMessageResponse = `{
-	"data": {
-	  "completed_at": null,
-	  "cost": null,
-	  "direction": "outbound",
-	  "encoding": "GSM-7",
-	  "errors": [],
-	  "from": {
-		"carrier": "TELNYX LLC",
-		"line_type": "VoIP",
-		"phone_number": "+18445550001"
-	  },
-	  "id": "40385f64-5717-4562-b3fc-2c963f66afa6",
-	  "media": [
-		{
-		  "content_type": null,
-		  "sha256": null,
-		  "size": null,
-		  "url": "https://pbs.twimg.com/profile_images/1142168442042118144/AW3F4fFD_400x400.png"
-		}
-	  ],
-	  "messaging_profile_id": "4000eba1-a0c0-4563-9925-b25e842a7cb6",
-	  "organization_id": "b448f9cc-a842-4784-98e9-03c1a5872950",
-	  "parts": 1,
-	  "received_at": "2019-01-23T18:10:02.574Z",
-	  "record_type": "message",
-	  "sent_at": null,
-	  "subject": "From Telnyx!",
-	  "tags": [
-		"Greetings"
-	  ],
-	  "text": "Hello, World!",
-	  "to": [
-		{
-		  "carrier": "T-MOBILE USA, INC.",
-		  "line_type": "Wireless",
-		  "phone_number": "+18665550001",
-		  "status": "queued"
-		}
-	  ],
-	  "type": "MMS",
-	  "valid_until": null,
-	  "webhook_failover_url": "https://backup.example.com/hooks",
-	  "webhook_url": "https://www.example.com/hooks"
-	}
-  }
+    "data": {
+        "record_type": "message",
+        "direction": "outbound",
+        "id": "40317c96-1c0f-4d2a-baa9-026e4bc393d0",
+        "type": "MMS",
+        "organization_id": "3adc2af4-4a4d-46a2-b2bf-88190139e8c3",
+        "messaging_profile_id": "40017c80-4a5d-4d80-b637-62f1454e7706",
+        "from": {
+            "phone_number": "+18445550001",
+            "carrier": "Telnyx",
+            "line_type": "Wireless"
+        },
+        "to": [
+            {
+                "phone_number": "+18665550001",
+                "status": "queued",
+                "carrier": "OMNIPOINT COMMUNICATIONS ENTERPRISES, LP",
+                "line_type": "Wireless"
+            }
+        ],
+        "cc": [],
+        "text": "Hello, World!",
+        "media": [
+            {
+                "url": "https://i.picsum.photos/id/560/200/200.jpg?hmac=Dqou6QpKCTK2srRsCRhlIxLQHvFL7zz6UocOb3UkpwI",
+                "content_type": null,
+                "sha256": null,
+                "size": null
+            }
+        ],
+        "webhook_url": "",
+        "webhook_failover_url": "",
+        "encoding": "GSM-7",
+        "parts": 1,
+        "tags": [],
+        "cost": {
+            "amount": "0.0220",
+            "currency": "USD"
+        }
+    }
+}
 `
 var ExpectedSendMessagePayload = `{"to":"+18665550001","from":"+18445550001","text":"Hello, World!"}`
