@@ -83,9 +83,14 @@ type SendMessageResponseFrom struct {
 	LineType    string `json:"line_type"`
 	PhoneNumber string `json:"phone_number"`
 }
+
+type SendMessageResponseCost struct {
+	Amount   string `json:"amount"`
+	Currency string `json:"currency"`
+}
 type SendMessageResponseData struct {
 	CompletedAt        time.Time                  `json:"completed_at"`
-	Cost               string                     `json:"cost"`
+	Cost               SendMessageResponseCost    `json:"cost"`
 	Direction          string                     `json:"direction"`
 	Encoding           string                     `json:"encoding"`
 	Errors             []ResponseError            `json:"errors"`
