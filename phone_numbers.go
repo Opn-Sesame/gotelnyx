@@ -31,6 +31,30 @@ func (a *Account) NumberSearch(ctx context.Context, searchOpts *NumberSearchOpti
 	}
 	return &NumberSearchResponseList{PhoneNumbers: numberList}, nil
 }
+func (a *Account) TollFreeNumberSearch(ctx context.Context, searchOpts *NumberSearchOptions) (*NumberSearchResponseList, error) {
+	path := a.DefaultEndpoint + numberSearchPath
+	areaCodeFilter := ""
+	if searchOpts.AreaCode != "" {
+		areaCodeFilter = fmt.Sprintf("&filter[national_destination_code]=%s", searchOpts.AreaCode)
+	}
+	limit := 1
+	if searchOpts.SearchLimit != 0 {
+		limit = searchOpts.SearchLimit
+	}
+	queryParams := fmt.Sprintf(`?filter[limit][]=%v&filter[country_code]=US&filter[number_type]=toll-free%s`, limit, areaCodeFilter)
+	result, _, err := a.makeRequest(ctx, http.MethodGet, path+queryParams, &NumberSearchResponse{})
+	if err != nil {
+		return nil, err
+	}
+	data := result.(*NumberSearchResponse).Data
+	totalResults := result.(*NumberSearchResponse).Meta.TotalResults
+	numberList := make([]string, totalResults)
+
+	for i := 0; i < totalResults; i++ {
+		numberList[i] = data[i].PhoneNumber
+	}
+	return &NumberSearchResponseList{PhoneNumbers: numberList}, nil
+}
 
 // CreateNumberOrder creates a phone number order.
 func (a *Account) CreateNumberOrder(ctx context.Context, numberOrderParams *NumberOrderParameters) (*NumberOrderResponse, error) {
