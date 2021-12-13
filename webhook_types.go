@@ -56,7 +56,7 @@ type DeliveryUpdateWebhookMeta struct {
 	DeliveredTo string `json:"delivered_to"`
 }
 type DeliveryUpdateWebhook struct {
-	Data MessagingProfileData      `json:"data"`
+	Data DeliveryUpdateWebhookData `json:"data"`
 	Meta DeliveryUpdateWebhookMeta `json:"meta"`
 }
 
